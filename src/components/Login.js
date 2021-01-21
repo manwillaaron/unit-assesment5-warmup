@@ -1,13 +1,26 @@
-const React, { Component } = require("react");
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { updatePasswordInput, updateUsernameInput, login } from '../dux/userReducer'
 
-class Login extends Component{
-render(){
-    return(
+
+function Login(props) {
+    // console.log(props)
+    const {usernameInput, passInput, userLoggedIn} = props.userReducer
+    return (
         <div>
-            Login
+            {userLoggedIn && <Redirect to='/profile'/>}
+            <input
+                value={props.userReducer.usernameInput}
+                onChange={e=>props.updateUsernameInput(e.target.value)} />
+            <input
+                value={props.userReducer.passInput}
+                onChange={e=>props.updatePasswordInput(e.target.value)} />
+            <button onClick={()=>props.login(usernameInput, passInput)}>submit</button>
         </div>
     )
 }
+function mapStateToProps(state) {
+    return state
 }
 
-export default Login
+export default connect(mapStateToProps, {login, updatePasswordInput, updateUsernameInput })(Login)

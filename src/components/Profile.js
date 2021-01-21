@@ -1,13 +1,21 @@
-const React, { Component } = require("react");
+import { connect } from "react-redux"
 
-class Profile extends Component{
-render(){
+
+function Profile(props) {
+    console.log(props)
+    const {user} = props.userReducer
     return(
         <div>
-            Profile
+            <p>welcome {user.username}!</p>
+            <p></p>
+            <p></p>
+            <p></p>
         </div>
     )
+
 }
+function mapStateToProps(state){
+    return state
 }
 
-export default Profile
+export default connect(mapStateToProps)(Profile)
